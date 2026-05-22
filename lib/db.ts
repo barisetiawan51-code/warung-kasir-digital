@@ -1,10 +1,13 @@
 import mysql from "mysql2/promise";
 
-const dbConfig = {
+const isCloud = process.env.DB_HOST?.includes('aivencloud.com') || process.env.DB_HOST?.includes('railway.app') || process.env.DB_HOST?.includes('aws');
+
+const dbConfig: mysql.ConnectionOptions = {
   host: process.env.DB_HOST || "localhost",
   port: parseInt(process.env.DB_PORT || "3306", 10),
   user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
+  ssl: isCloud ? { rejectUnauthorized: false } : undefined,
 };
 
 let pool: mysql.Pool | null = null;
@@ -13,11 +16,18 @@ export async function initDb(): Promise<mysql.Pool> {
   if (pool) return pool;
 
   try {
-    // 1. Establish temporary connection without database to create it if missing
-    const tempConn = await mysql.createConnection(dbConfig);
     const databaseName = process.env.DB_DATABASE || "warung_kasir";
-    await tempConn.query(`CREATE DATABASE IF NOT EXISTS \`${databaseName}\``);
-    await tempConn.end();
+
+    // 1. Establish temporary connection without database to create it if missing (for local dev)
+    try {
+      const tempConn = await mysql.createConnection({ ...dbConfig, ssl: undefined });
+      await tempConn.query(`CREATE DATABASE IF NOT EXISTS \`${databaseName}\``);
+      await tempConn.end();
+    } catch (err: any) {
+      // Cloud databases like Aiven often restrict CREATE DATABASE permissions.
+      // We log the warning and proceed, assuming the database (e.g., defaultdb) already exists.
+      console.warn("Skipping CREATE DATABASE step (likely a cloud environment):", err.message);
+    }
 
     // 2. Establish connection pool with correct database selection
     pool = mysql.createPool({
