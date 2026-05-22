@@ -34,8 +34,6 @@ export async function GET() {
         DATE_FORMAT(timestamp, '%d %M %Y %H:%i:%s') as timestamp, 
         items_count as itemsCount, 
         subtotal, 
-        discount, 
-        tax, 
         total, 
         cash_paid as cashPaid, 
         change_amount as changeAmount, 
@@ -68,8 +66,6 @@ export async function GET() {
       return {
         ...r,
         subtotal: Number(r.subtotal),
-        discount: Number(r.discount),
-        tax: Number(r.tax),
         total: Number(r.total),
         cashPaid: Number(r.cashPaid),
         change: Number(r.changeAmount),
@@ -103,8 +99,6 @@ export async function POST(request: Request) {
       id, 
       itemsCount, 
       subtotal, 
-      discount, 
-      tax, 
       total, 
       cashPaid, 
       change, 
@@ -124,9 +118,9 @@ export async function POST(request: Request) {
 
     // 1. Insert transaction summary with creator user_id audit trail
     await connection.query(
-      `INSERT INTO transactions (id, user_id, timestamp, items_count, subtotal, discount, tax, total, cash_paid, change_amount, status) 
-       VALUES (?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [id, user.id, itemsCount, subtotal, discount || 0, tax || 0, total, cashPaid, change, status || "Lunas / Success"]
+      `INSERT INTO transactions (id, user_id, timestamp, items_count, subtotal, total, cash_paid, change_amount, status) 
+       VALUES (?, ?, NOW(), ?, ?, ?, ?, ?, ?)`,
+      [id, user.id, itemsCount, subtotal, total, cashPaid, change, status || "Lunas / Success"]
     );
 
     // 2. Insert transaction items and update stock for each product
