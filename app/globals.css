@@ -1,26 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Lexend:wght@100..900&display=swap');
+
 @import "tailwindcss";
+@config "../tailwind.config.js";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ==========================================================================
+     Fluid Typography & Spacing
+     ========================================================================== */
+  --font-jakarta: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-lexend: 'Lexend', sans-serif;
+
+  --fs-xs: clamp(0.75rem, 0.70rem + 0.20vw, 0.875rem);
+  --fs-sm: clamp(0.875rem, 0.80rem + 0.30vw, 1rem);
+  --fs-base: clamp(1rem, 0.90rem + 0.40vw, 1.125rem);
+  --fs-lg: clamp(1.125rem, 1.00rem + 0.50vw, 1.25rem);
+  --fs-xl: clamp(1.25rem, 1.10rem + 0.60vw, 1.5rem);
+  --fs-2xl: clamp(1.5rem, 1.30rem + 0.80vw, 2rem);
+  --fs-3xl: clamp(1.875rem, 1.60rem + 1.20vw, 2.75rem);
+
+  /* Fluid Spacing */
+  --spacing-xs: clamp(0.25rem, 0.20rem + 0.20vw, 0.375rem);
+  --spacing-sm: clamp(0.5rem, 0.40rem + 0.40vw, 0.75rem);
+  --spacing-md: clamp(1rem, 0.80rem + 0.80vw, 1.5rem);
+  --spacing-lg: clamp(1.5rem, 1.20rem + 1.20vw, 2.25rem);
+
+  /* ==========================================================================
+     Design Tokens (Cyberpunk-Synthwave Dark Theme)
+     ========================================================================== */
+  --color-primary-text: #FFFFFF; /* Crisp White */
+  --color-secondary-text: #94A3B8; /* Muted Lavender/Slate */
+  --color-body-bg: #090214; /* Deep Obsidian Midnight Violet */
+
+  /* Translucent Mesh Background Blobs */
+  --mesh-pink: rgba(230, 20, 190, 0.15);  /* High-energy Neon Magenta */
+  --mesh-violet: rgba(139, 92, 246, 0.12); /* Deep Violet */
+  --mesh-purple: rgba(157, 78, 221, 0.08); /* Cyber Purple */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ==========================================================================
+   Base Elements Setup
+   ========================================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-body-bg);
+    color: var(--color-primary-text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    /* Cyberpunk purple grid background pattern matching the reference image scale */
+    background-image: 
+      radial-gradient(circle at 35% 35%, #180532 0%, transparent 65%),
+      radial-gradient(rgba(230, 20, 190, 0.08) 1.2px, transparent 1.2px);
+    background-size: 100% 100%, 28px 28px;
+    background-attachment: fixed;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   Dark Meshed Gradient Background Layers
+   ========================================================================== */
+.mesh-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: #090214;
 }
+
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.85;
+}
+
+.mesh-blob-1 {
+  width: 50vw;
+  height: 50vw;
+  background: var(--mesh-pink);
+  top: -10%;
+  left: 15%;
+  animation: meshShift1 22s ease infinite;
+}
+
+.mesh-blob-2 {
+  width: 45vw;
+  height: 45vw;
+  background: var(--mesh-violet);
+  top: 25%;
+  right: -5%;
+  animation: meshShift2 18s ease infinite;
+}
+
+.mesh-blob-3 {
+  width: 48vw;
+  height: 48vw;
+  background: var(--mesh-purple);
+  bottom: -15%;
+  left: -5%;
+  animation: meshShift3 25s ease infinite;
+}
+
+/* ==========================================================================
+   Reusable Dark-Mode Glassmorphism Class (.glass-card-obsidian)
+   ========================================================================== */
+.glass-card-obsidian {
+  background: rgba(19, 9, 34, 0.8); /* Dark translucent frosted glass violet */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.15); /* Subtle, ultra-thin dark purple border */
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.03);
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-obsidian:hover {
+  transform: translateY(-2px);
+  border-color: rgba(230, 20, 190, 0.35); /* Neon Magenta highlight hover border outline */
+  box-shadow: 0 15px 40px -5px rgba(230, 20, 190, 0.15),
+              0 4px 12px 0 rgba(0, 0, 0, 0.5),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Glass Header Navbar */
+.glass-navbar-dark {
+  background: rgba(19, 9, 34, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.18);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7);
+}
+
+/* Dark Glass Input Box with neon magenta focus highlights */
+.glass-input-dark {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 9999px; /* Pill input shape */
+  color: #FFFFFF;
+  transition: all 0.2s ease-in-out;
+}
+
+.glass-input-dark:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: #E614BE; /* Neon Magenta focus border */
+  box-shadow: 0 0 0 3px rgba(230, 20, 190, 0.2);
+}
+
+/* Scrollbar Customization with Neon Magenta thumb */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(19, 9, 34, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(230, 20, 190, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(230, 20, 190, 0.5);
+}
+
+/* ==========================================================================
+   Fluid Utility Typography Classes
+   ========================================================================== */
+.text-fluid-xs { font-size: var(--fs-xs); }
+.text-fluid-sm { font-size: var(--fs-sm); }
+.text-fluid-base { font-size: var(--fs-base); }
+.text-fluid-lg { font-size: var(--fs-lg); }
+.text-fluid-xl { font-size: var(--fs-xl); }
+.text-fluid-2xl { font-size: var(--fs-2xl); }
+.text-fluid-3xl { font-size: var(--fs-3xl); }
+
+/* ==========================================================================
+   Print Styles for PDF Export
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 15mm 15mm;
+  }
+  
+  html, body {
+    background: #FFFFFF !important;
+    background-image: none !important;
+    color: #0F172A !important;
+    font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 10pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
+  /* Hide screen-only interactive elements */
+  .no-print, 
+  header, 
+  nav, 
+  footer, 
+  button, 
+  .no-print * {
+    display: none !important;
+  }
+
+  /* Show print-only containers */
+  .print-only {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* Force browsers to print exact background colors and border colors */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Prevent elements from breaking awkwardly across pages */
+  .print-avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Override any layout constraints for printing */
+  main {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Scanner Laser Animation & Glow
+   ========================================================================== */
+@keyframes scan-laser {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  50% { top: 100%; opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 0%; opacity: 0; }
+}
+.animate-scan-laser {
+  animation: scan-laser 2.5s ease-in-out infinite;
+}
+.text-shadow-glow-magenta {
+  text-shadow: 0 0 10px rgba(230, 20, 190, 0.8), 0 0 20px rgba(230, 20, 190, 0.4);
+}
+

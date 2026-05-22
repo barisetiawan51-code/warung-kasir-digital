@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="42.3332mm" height="42.3332mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 4233.32 4233.32"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <font id="FontID0" horiz-adv-x="684" font-variant="normal" style="fill-rule:nonzero" font-weight="700">
+	<font-face 
+		font-family="Tahoma">
+		<font-face-src>
+			<font-face-name name="Tahoma Bold"/>
+		</font-face-src>
+	</font-face>
+   <missing-glyph><path d="M0 0z"/></missing-glyph>
+   <glyph unicode="K" horiz-adv-x="696" d="M712 0l-220.166 0 -198.169 295.497 -35.665 -49.6646 0 -245.833 -183 0 0 727 183 0 0 -324.002 232.502 324.002 210.499 0 -258.837 -337.333 269.836 -389.667z"/>
+   <glyph unicode="W" horiz-adv-x="1027" d="M1013 727l-184.001 -727 -200.164 0 -116.498 449.667 -112.502 -449.667 -200.833 0 -184.001 727 189.834 0 99.9979 -486.332 121.5 486.332 181.168 0 115.666 -487.664 105.168 487.664 184.664 0z"/>
+  </font>
+  <style type="text/css">
+   <![CDATA[
+    @font-face { font-family:"Tahoma";font-variant:normal;font-weight:bold;src:url("#FontID0") format(svg)}
+    .fil1 {fill:white}
+    .fil0 {fill:url(#id0)}
+    .fnt0 {font-weight:bold;font-size:1899.34px;font-family:'Tahoma'}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="1155.43" y1="230.85" x2="3077.89" y2="4002.47">
+   <stop offset="0" style="stop-opacity:1; stop-color:#CF36CC"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#A055EB"/>
+  </linearGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1202779023424">
+   <rect class="fil0" width="4233.32" height="4233.32" rx="452.57" ry="452.57"/>
+   <text x="363.5" y="2822.25"  class="fil1 fnt0">WK</text>
+  </g>
+ </g>
+</svg>
